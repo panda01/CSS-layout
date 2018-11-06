@@ -2,13 +2,8 @@
  *
  * 	Sass Grid!
  * 	An Awesome simple grid with actual columns, that prioritizes minimal mark up!
- * 	Author: Khalah Jones-Golden
+ * 	Author: Khalah Jones-Golden<khasan222@gmail.com>
  * 	
- *
- *
- *
- *
- *
  *
  *
  */
@@ -52,6 +47,10 @@ $num_grid_columns: 12;
 	align-items: center;
 	position: relative;
 }
+/*
+ * 	Don't need all size columns? comment this section out then!
+ *
+ */
 $standard_col_width: 		map-get($responsive_col_width, 'desktop');
 $standard_gutter_width: 	map-get($responsive_gutter_width, 'desktop');
 .row > {
@@ -98,6 +97,14 @@ $standard_gutter_width: 	map-get($responsive_gutter_width, 'desktop');
 		}
 	}
 }
+/*
+ * 	Don't need all size columns? comment this section out then!
+ *
+ *
+ *
+ * 	END COMMENT OUT SECTION
+ *
+ */
 @mixin cols($breakpoint) {
 	$breakpoint_container_margin: 		map-get($responsive_side_margins, $breakpoint);
 	$gutter_width: 						map-get($responsive_gutter_width, $breakpoint);
