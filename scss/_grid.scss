@@ -1,0 +1,164 @@
+/*
+ *
+ * 	Sass Grid!
+ * 	An Awesome simple grid with actual columns, that prioritizes minimal mark up!
+ * 	Author: Khalah Jones-Golden
+ * 	
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+$responsive_breakpoints: (
+	"mobile": 		'768px',
+	"tablet": 		'960px',
+	"desktop": 		'1600px',
+	"largetop": 	'1920px'
+
+);
+$responsive_side_margins: (
+	"mobile": 		30px,
+	"tablet": 		40px,
+	"desktop": 		60px,
+	"largetop": 	90px
+);
+$responsive_col_width: (
+	"mobile": 		5.71%,
+	"tablet": 		5.67%,
+	"desktop": 		5.17%,
+	"largetop": 	5.17%,
+);
+$responsive_gutter_width: (
+	"mobile": 		2.86%,
+	"tablet": 		2.91%,
+	"desktop": 		3.45%,
+	"largetop": 	3.45%
+);
+
+$num_grid_columns: 12;
+
+.container {
+	box-sizing: border-box;
+	width: 100%;
+}
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	position: relative;
+}
+$standard_col_width: 		map-get($responsive_col_width, 'desktop');
+$standard_gutter_width: 	map-get($responsive_gutter_width, 'desktop');
+.row > {
+	.col-1,  .col-2,  .col-3,
+	.col-4,  .col-5,  .col-6,
+	.col-7,  .col-8,  .col-9,
+	.col-10, .col-11, .col-12 {
+		width: 100%;
+	}
+	@for $col_num from 1 through $num_grid_columns {
+		.order-#{$col_num} {
+			order: $col_num - 6;
+		}
+		$calc_col_width: ($col_num * $standard_col_width) + (($col_num - 1) * $standard_gutter_width);
+		.col-#{$col_num} {
+			width: $calc_col_width;
+
+			@for $adjacent_num from 1 through $num_grid_columns {
+				+ .col-#{$adjacent_num} {
+					margin-left: $standard_gutter_width;
+				}
+			}
+			@for $offset_num from 1 through 6 {
+				&:first-child {
+					:not([class*=".order-1"]),
+					:not([class*=".order-2"]),
+					:not([class*=".order-3"]),
+					:not([class*=".order-4"]),
+					:not([class*=".order-5"]),
+					:not([class*=".order-6"]),
+					:not([class*=".order-7"]),
+					:not([class*=".order-8"]),
+					:not([class*=".order-9"]),
+					:not([class*=".order-10"]),
+					:not([class*=".order-11"]),
+					:not([class*=".order-12"]) {
+						~ .order-#{$offset_num} {
+							margin-right: $standard_gutter_width;
+							margin-left: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+@mixin cols($breakpoint) {
+	$breakpoint_container_margin: 		map-get($responsive_side_margins, $breakpoint);
+	$gutter_width: 						map-get($responsive_gutter_width, $breakpoint);
+	$col_width: 						map-get($responsive_col_width, $breakpoint);
+	.container {
+		padding-left: $breakpoint_container_margin;
+		padding-right: $breakpoint_container_margin;
+	}
+	.row > {
+		[class*="col-#{$breakpoint}-"] {
+			width: 100%;
+		}
+		@for $col_num from 1 through $num_grid_columns {
+			.order-#{$breakpoint}-#{$col_num} {
+				order: $col_num - 6;
+			}
+			$calc_col_width: ($col_num * $col_width) + (($col_num - 1) * $gutter_width);
+			.col-#{$breakpoint}-#{$col_num} {
+				width: $calc_col_width;
+
+				@for $adjacent_num from 1 through $num_grid_columns {
+					+ .col-#{$breakpoint}-#{$adjacent_num} {
+						margin-left: $gutter_width;
+					}
+				}
+				@for $offset_num from 1 through 6 {
+					&:first-child:not([class*="order-#{$breakpoint}-"]) ~ .order-#{$breakpoint}-#{$offset_num} {
+						margin-right: $gutter_width;
+						margin-left: 0;
+					}
+				}
+			}
+		}
+	}
+	// Do we really need this?
+	.display-none-#{$breakpoint} {
+		display: none;
+	}
+}
+
+
+$last_breakpoint_width: 0;
+@each $breakpoint in map-keys($responsive_breakpoints) {
+	$breakpoint_width: map-get($responsive_breakpoints, $breakpoint);
+	@if $breakpoint == 'desktop' {
+		@media screen and (min-width: $last_breakpoint_width) {
+			@include cols($breakpoint);
+		}
+	} @else if $breakpoint == 'largetop' {
+		@media screen and (min-width: $last_breakpoint_width) {
+			@include cols($breakpoint);
+		}
+	} @else if $breakpoint == 'mobile' {
+		$tablet_width: map-get($responsive_breakpoints, "tablet");
+		@media screen and (max-width: $tablet_width){
+			@include cols($breakpoint);
+		}
+	} @else {
+		@media screen and (min-width: $last_breakpoint_width) and (max-width: $breakpoint_width) {
+			@include cols($breakpoint);
+		}
+	}
+	$last_breakpoint_width: map-get($responsive_breakpoints, $breakpoint);
+}
