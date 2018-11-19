@@ -1,0 +1,8 @@
+Author: Khalah Jones-Golden<khasan222@gmail.com>
+
+What I thought was an obvious solution and alternative to terrible grids that require extra markup,
+and/or classes that the lazy programmer I am decided there has to be a better way, perhaps this is it.
+
+Install sass command line, and then run `./dev.sh`. It will compile your stylesheet to `./dist`
+
+Enjoy, and contributions are always welcome.
