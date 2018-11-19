@@ -78,7 +78,6 @@ $num_grid_columns: 12;
 		// margin-bottom: -$gutter_width;
 		> {
 			.demo {
-				color: #fff;
 				min-height: 30vh;
 				background-color: blue;
 				margin-bottom: $gutter_width;
@@ -131,7 +130,7 @@ $last_breakpoint_width: 0;
 		}
 	} @else if $breakpoint == 'mobile' {
 		$tablet_width: map-get($responsive_breakpoints, "tablet");
-		@media screen and (max-width: $tablet_width){
+		@media screen and (max-width: $tablet_width) {
 			@include cols($breakpoint);
 		}
 	} @else {
