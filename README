@@ -9,3 +9,23 @@ simple webserver.
 Install sass command line, and then run `./dev.sh`. It will compile your stylesheet to `./dist`
 
 Enjoy, and contributions are always welcome.
+
+Some classes that we use in order to build a grid system
+.container
+.row >
+	.col-desktop-6
+	.col-mobile-9
+	.order-desktop-1
+	.offset-mobile-3
+
+
+All classes follow the formula of {command}-{size}-{value}
+where
+command: col, order, offset
+size: mobile, tablet, desktop, largetop
+amount: 1-12
+
+
+we also have some simple helper classes with a similar although different format
+
+.display-none-mobile

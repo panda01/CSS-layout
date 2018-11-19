@@ -35,17 +35,17 @@ $responsive_side_margins: (
 	"desktop": 		60px,
 	"largetop": 	90px
 );
-// total width is simply num_cols * col_width + num_cols *gutter_width
+// total width is simply (num_cols * col_width + num_cols * gutter_width)
 // Need to make it so that way you just give it col width and gutter width and we're alright
 $responsive_col_width: (
 	"mobile": 		calc_percent(18, 324),
-	"tablet": 		calc_percent(39, 728), // FIXME Pretty sure this should be 708(following the above formula), but that doesn't work?!?
+	"tablet": 		calc_percent(39, 728), // FIXME Pretty sure this should be 708=(12 * 39 + 12 * 20), but that doesn't work?!?
 	"desktop": 		calc_percent(60, 1200),
 	"largetop": 	calc_percent(90, 1800)
 );
 $responsive_gutter_width: (
 	"mobile": 		calc_percent(9, 324),
-	"tablet": 		calc_percent(20, 728), // FIXME Pretty sure this should be 708(following the above formula), but that doesn't work?!?
+	"tablet": 		calc_percent(20, 728), // FIXME Pretty sure this should be 708=(12*39 + 12*20), but that doesn't work?!?
 	"desktop": 		calc_percent(40, 1200),
 	"largetop": 	calc_percent(60, 1800)
 );
@@ -110,7 +110,9 @@ $num_grid_columns: 12;
 			}
 		}
 	}
+	// TODO
 	// Do we really need this?
+	// and if we keep it, shouldn't it be display-mobile-none to keep with the format above?
 	.display-none-#{$breakpoint} {
 		display: none;
 	}
