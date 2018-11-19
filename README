@@ -1,10 +1,8 @@
 Author: Khalah Jones-Golden<khasan222@gmail.com>
 
-What I thought was an obvious solution and alternative to terrible grids that require extra markup,
-and/or classes that the lazy programmer I am decided there has to be a better way, perhaps this is it.
+What I thought was an obvious solution and alternative to terrible grids that require extra markup, and/or classes that the lazy programmer I am decided there has to be a better way, perhaps this is it.
 
-This was expected to be run on a server that will show this dir and it's children when requested, a 
-simple webserver.
+This was expected to be run on a server that will show this dir and it's children when requested, a simple webserver.
 
 Install sass command line, and then run `./dev.sh`. It will compile your stylesheet to `./dist`
 
@@ -24,7 +22,6 @@ where
 command: col, order, offset
 size: mobile, tablet, desktop, largetop
 amount: 1-12
-
 
 we also have some simple helper classes with a similar although different format
 
