@@ -39,13 +39,13 @@ $responsive_side_margins: (
 // Need to make it so that way you just give it col width and gutter width and we're alright
 $responsive_col_width: (
 	"mobile": 		calc_percent(18, 324),
-	"tablet": 		calc_percent(39, 728), // FIXME Pretty sure this should be 708=(12 * 39 + 12 * 20), but that doesn't work?!?
+	"tablet": 		calc_percent(39, 708), // FIXME Pretty sure this should be 708=(12 * 39 + 12 * 20), but that doesn't work?!?
 	"desktop": 		calc_percent(60, 1200),
 	"largetop": 	calc_percent(90, 1800)
 );
 $responsive_gutter_width: (
 	"mobile": 		calc_percent(9, 324),
-	"tablet": 		calc_percent(20, 728), // FIXME Pretty sure this should be 708=(12*39 + 12*20), but that doesn't work?!?
+	"tablet": 		calc_percent(20, 708), // FIXME Pretty sure this should be 708=(12*39 + 12*20), but that doesn't work?!?
 	"desktop": 		calc_percent(40, 1200),
 	"largetop": 	calc_percent(60, 1800)
 );
@@ -91,6 +91,7 @@ $num_grid_columns: 12;
 						margin-left: $gutter_width / 2;
 						margin-right: $gutter_width / 2;
 						flex-basis: 100% - $gutter_width;
+						max-width: 100% - $gutter_width;
 					}
 				}
 			}
@@ -103,6 +104,7 @@ $num_grid_columns: 12;
 					flex-basis: $calc_col_width;
 					margin-left: $gutter_width / 2;
 					margin-right: $gutter_width / 2;
+					max-width: $calc_col_width;
 				}
 				.offset-#{$breakpoint}-#{$col_num} {
 					margin-left: $calc_col_width + $gutter_width * 1.5 !important;
