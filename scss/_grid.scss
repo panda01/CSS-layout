@@ -10,6 +10,14 @@
 @function calc_percent($divisor, $dividend) {
 	@return $divisor / $dividend * 100%
 }
+@function calc_col_width_percent($gutter_width, $content_width) {
+	$col_width: ($content_width - ($gutter_width * 11)) / 12;
+	$layout_content_width: $content_width + $gutter_width;
+	@return calc_percent($col_width, $layout_content_width);
+}
+@function calc_responsive_gutter_width($gutter_width, $content_width) {
+	@return calc_percent($gutter_width, ($gutter_width + $content_width));
+}
 @function should_have_width_override($loopbreakpoint, $fnbreakpoint) {
 	@if $loopbreakpoint == $fnbreakpoint {
 		@return false;
@@ -22,6 +30,7 @@
 	}
 	@return true;
 }
+// FIXME this should definitely be a list and not a map anymore
 $responsive_breakpoints: (
 	"mobile": 		$max_mobile_tablet,
 	"tablet": 		$max_mobile_tablet,
@@ -30,24 +39,24 @@ $responsive_breakpoints: (
 
 );
 $responsive_side_margins: (
-	"mobile": 		30px,
-	"tablet": 		40px,
-	"desktop": 		60px,
-	"largetop": 	90px
+	"mobile": 		$mobile_side_margin,
+	"tablet": 		$tablet_side_margin,
+	"desktop": 		$desktop_side_margin,
+	"largetop": 	$largetop_side_margin
 );
 // total width is simply (num_cols * col_width + num_cols * gutter_width)
 // Need to make it so that way you just give it col width and gutter width and we're alright
 $responsive_col_width: (
-	"mobile": 		calc_percent(18, 324),
-	"tablet": 		calc_percent(39, 708), // FIXME Pretty sure this should be 708=(12 * 39 + 12 * 20), but that doesn't work?!?
-	"desktop": 		calc_percent(60, 1200),
-	"largetop": 	calc_percent(90, 1800)
+	"mobile": 		calc_col_width_percent($mobile_gutter_width, $mobile_content_width),
+	"tablet": 		calc_col_width_percent($tablet_gutter_width, $tablet_content_width),
+	"desktop": 		calc_col_width_percent($desktop_gutter_width, $desktop_content_width),
+	"largetop": 	calc_col_width_percent($largetop_gutter_width, $largetop_content_width)
 );
 $responsive_gutter_width: (
-	"mobile": 		calc_percent(9, 324),
-	"tablet": 		calc_percent(20, 708), // FIXME Pretty sure this should be 708=(12*39 + 12*20), but that doesn't work?!?
-	"desktop": 		calc_percent(40, 1200),
-	"largetop": 	calc_percent(60, 1800)
+	"mobile": 		calc_responsive_gutter_width($mobile_gutter_width, $mobile_content_width),
+	"tablet": 		calc_responsive_gutter_width($tablet_gutter_width, $tablet_content_width),
+	"desktop": 		calc_responsive_gutter_width($desktop_gutter_width, $desktop_content_width),
+	"largetop": 	calc_responsive_gutter_width($largetop_gutter_width, $largetop_content_width)
 );
 
 $num_grid_columns: 12;

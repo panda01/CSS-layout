@@ -2,3 +2,22 @@ $max_mobile_tablet: 960px;
 $min_tablet: 768px;
 $min_desktop: 961px;
 $min_largetop: 1600px;
+
+$mobile_side_margin: 30px;
+$tablet_side_margin: 40px;
+$desktop_side_margin: 60px;
+$largetop_side_margin: 90px;
+
+// Do not give these units, because
+// these will turn into percents.
+$mobile_content_width: 315;
+$mobile_gutter_width: 9;
+
+$tablet_content_width: 688;
+$tablet_gutter_width: 20;
+
+$desktop_content_width: 1160;
+$desktop_gutter_width: 40;
+
+$largetop_content_width: 1740;
+$largetop_gutter_width: 60;
