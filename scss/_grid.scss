@@ -23,9 +23,9 @@
 	@return true;
 }
 $responsive_breakpoints: (
-	"mobile": 		768px,
-	"tablet": 		960px,
-	"desktop": 		1600px,
+	"mobile": 		$max_mobile_tablet,
+	"tablet": 		$max_mobile_tablet,
+	"desktop": 		$min_largetop,
 	"largetop": 	1920px
 
 );
@@ -86,6 +86,7 @@ $num_grid_columns: 12;
 					justify-content: center;
 				}
 				@each $margin_breakpoint_key in map-keys($responsive_breakpoints) {
+					// This ensure the overlap works fine
 					@if should_have_width_override($margin_breakpoint_key, $breakpoint) {
 						[class*="col-#{$margin_breakpoint_key}-"] {
 							margin-left: $gutter_width / 2;
@@ -126,20 +127,20 @@ $last_breakpoint_width: 0;
 @each $breakpoint in map-keys($responsive_breakpoints) {
 	$breakpoint_width: map-get($responsive_breakpoints, $breakpoint);
 	@if $breakpoint == 'desktop' {
-		@media screen and (min-width: ($last_breakpoint_width + 1)) {
+		@media screen and (min-width: $min_desktop) {
 			@include cols($breakpoint);
 		}
 	} @else if $breakpoint == 'largetop' {
-		@media screen and (min-width: $last_breakpoint_width) {
+		@media screen and (min-width: $min_largetop) {
 			@include cols($breakpoint);
 		}
 	} @else if $breakpoint == 'mobile' {
 		$tablet_width: map-get($responsive_breakpoints, "tablet");
-		@media screen and (max-width: $tablet_width) {
+		@media screen and (max-width: $max_mobile_tablet) {
 			@include cols($breakpoint);
 		}
-	} @else {
-		@media screen and (min-width: $last_breakpoint_width) and (max-width: $breakpoint_width) {
+	} @else { // tablet
+		@media screen and (min-width: $min_tablet) and (max-width: $max_mobile_tablet) {
 			@include cols($breakpoint);
 		}
 	}
