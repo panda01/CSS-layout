@@ -86,6 +86,10 @@ $num_grid_columns: 12;
 			margin-right: $gutter_width * -0.5;
 			// margin-bottom: -$gutter_width;
 			> {
+				* {
+					margin-left: $gutter_width / 2;
+					margin-right: $gutter_width / 2;
+				}
 				.demo {
 					min-height: 30vh;
 					background-color: blue;
