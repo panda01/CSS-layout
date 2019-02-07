@@ -30,33 +30,28 @@
 	}
 	@return true;
 }
-// FIXME this should definitely be a list and not a map anymore
-$responsive_breakpoints: (
-	"mobile": 		$max_mobile_tablet,
-	"tablet": 		$max_mobile_tablet,
-	"desktop": 		$min_largetop,
-	"largetop": 	1920px
+// Remove these keys inorder to not support certain sizes
+$responsive_breakpoint_keys: ('mobile', 'tablet', 'desktop', 'largetop');
 
-);
 $responsive_side_margins: (
-	"mobile": 		$mobile_side_margin,
-	"tablet": 		$tablet_side_margin,
-	"desktop": 		$desktop_side_margin,
-	"largetop": 	$largetop_side_margin
+	'mobile': 		$mobile_side_margin,
+	'tablet': 		$tablet_side_margin,
+	'desktop': 		$desktop_side_margin,
+	'largetop': 	$largetop_side_margin
 );
 // total width is simply (num_cols * col_width + num_cols * gutter_width)
 // Need to make it so that way you just give it col width and gutter width and we're alright
 $responsive_col_width: (
-	"mobile": 		calc_col_width_percent($mobile_gutter_width, $mobile_content_width),
-	"tablet": 		calc_col_width_percent($tablet_gutter_width, $tablet_content_width),
-	"desktop": 		calc_col_width_percent($desktop_gutter_width, $desktop_content_width),
-	"largetop": 	calc_col_width_percent($largetop_gutter_width, $largetop_content_width)
+	'mobile': 		calc_col_width_percent($mobile_gutter_width, $mobile_content_width),
+	'tablet': 		calc_col_width_percent($tablet_gutter_width, $tablet_content_width),
+	'desktop': 		calc_col_width_percent($desktop_gutter_width, $desktop_content_width),
+	'largetop': 	calc_col_width_percent($largetop_gutter_width, $largetop_content_width)
 );
 $responsive_gutter_width: (
-	"mobile": 		calc_responsive_gutter_width($mobile_gutter_width, $mobile_content_width),
-	"tablet": 		calc_responsive_gutter_width($tablet_gutter_width, $tablet_content_width),
-	"desktop": 		calc_responsive_gutter_width($desktop_gutter_width, $desktop_content_width),
-	"largetop": 	calc_responsive_gutter_width($largetop_gutter_width, $largetop_content_width)
+	'mobile': 		calc_responsive_gutter_width($mobile_gutter_width, $mobile_content_width),
+	'tablet': 		calc_responsive_gutter_width($tablet_gutter_width, $tablet_content_width),
+	'desktop': 		calc_responsive_gutter_width($desktop_gutter_width, $desktop_content_width),
+	'largetop': 	calc_responsive_gutter_width($largetop_gutter_width, $largetop_content_width)
 );
 
 $num_grid_columns: 12;
@@ -98,10 +93,10 @@ $num_grid_columns: 12;
 					align-items: center;
 					justify-content: center;
 				}
-				@each $margin_breakpoint_key in map-keys($responsive_breakpoints) {
+				@each $margin_breakpoint_key in $responsive_breakpoint_keys {
 					// This ensure the overlap works fine
 					@if should_have_width_override($margin_breakpoint_key, $breakpoint) {
-						[class*="col-#{$margin_breakpoint_key}-"] {
+						[class*='col-#{$margin_breakpoint_key}-'] {
 							margin-left: $gutter_width / 2;
 							margin-right: $gutter_width / 2;
 							flex-basis: 100% - $gutter_width;
@@ -136,9 +131,7 @@ $num_grid_columns: 12;
 }
 
 
-$last_breakpoint_width: 0;
-@each $breakpoint in map-keys($responsive_breakpoints) {
-	$breakpoint_width: map-get($responsive_breakpoints, $breakpoint);
+@each $breakpoint in $responsive_breakpoint_keys {
 	@if $breakpoint == 'desktop' {
 		@media screen and (min-width: $min_desktop) {
 			@include cols($breakpoint);
@@ -148,7 +141,6 @@ $last_breakpoint_width: 0;
 			@include cols($breakpoint);
 		}
 	} @else if $breakpoint == 'mobile' {
-		$tablet_width: map-get($responsive_breakpoints, "tablet");
 		@media screen and (max-width: $max_mobile_tablet) {
 			@include cols($breakpoint);
 		}
@@ -157,5 +149,4 @@ $last_breakpoint_width: 0;
 			@include cols($breakpoint);
 		}
 	}
-	$last_breakpoint_width: map-get($responsive_breakpoints, $breakpoint);
 }
