@@ -125,11 +125,11 @@ $num_grid_columns: 12;
 	// TODO
 	// Do we really need this?
 	// and if we keep it, shouldn't it be display-mobile-none to keep with the format above?
+	// Should there also be a display block, or flex?
 	.display-none-#{$breakpoint} {
 		display: none;
 	}
 }
-
 
 @each $breakpoint in $responsive_breakpoint_keys {
 	@if $breakpoint == 'desktop' {
