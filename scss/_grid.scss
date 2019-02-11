@@ -73,8 +73,13 @@ $num_grid_columns: 12;
 	$gutter_width: 						map-get($responsive_gutter_width, $breakpoint);
 	$col_width: 						map-get($responsive_col_width, $breakpoint);
 	.container {
-		padding-left: $breakpoint_container_margin;
-		padding-right: $breakpoint_container_margin;
+		@if type-of($breakpoint_container_margin) == string {
+			margin-left: $breakpoint_container_margin;
+			margin-right: $breakpoint_container_margin;
+		} @else {
+			padding-left: $breakpoint_container_margin;
+			padding-right: $breakpoint_container_margin;
+		}
 
 		.row {
 			margin-left: $gutter_width * -0.5;
