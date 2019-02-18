@@ -11,12 +11,15 @@
 	@return $divisor / $dividend * 100%
 }
 @function calc_col_width_percent($gutter_width, $content_width) {
-	$col_width: ($content_width - ($gutter_width * 11)) / 12;
+	$col_width: col_col_width_static($gutter_width, $content_width);
 	$layout_content_width: $content_width + $gutter_width;
 	@return calc_percent($col_width, $layout_content_width);
 }
 @function calc_responsive_gutter_width($gutter_width, $content_width) {
 	@return calc_percent($gutter_width, ($gutter_width + $content_width));
+}
+@function col_col_width_static($gutter_width, $content_width) {
+	@return ($content_width - ($gutter_width * 11)) / 12;
 }
 @function should_have_width_override($loopbreakpoint, $fnbreakpoint) {
 	@if $loopbreakpoint == $fnbreakpoint {
@@ -41,18 +44,38 @@ $responsive_side_margins: (
 );
 // total width is simply (num_cols * col_width + num_cols * gutter_width)
 // Need to make it so that way you just give it col width and gutter width and we're alright
-$responsive_col_width: (
+$responsive_col_width: ();
+$responsive_gutter_width: ();
+@if unitless($mobile_content_width) {
+	$responsive_col_width: (
 	'mobile': 		calc_col_width_percent($mobile_gutter_width, $mobile_content_width),
 	'tablet': 		calc_col_width_percent($tablet_gutter_width, $tablet_content_width),
 	'desktop': 		calc_col_width_percent($desktop_gutter_width, $desktop_content_width),
 	'largetop': 	calc_col_width_percent($largetop_gutter_width, $largetop_content_width)
-);
-$responsive_gutter_width: (
+	);
+} @else {
+	$responsive_col_width: (
+	'mobile': 		col_col_width_static($mobile_gutter_width, $mobile_content_width),
+	'tablet': 		col_col_width_static($tablet_gutter_width, $tablet_content_width),
+	'desktop': 		col_col_width_static($desktop_gutter_width, $desktop_content_width),
+	'largetop': 	col_col_width_static($largetop_gutter_width, $largetop_content_width)
+	);
+}
+@if unitless($mobile_gutter_width) == true {
+	$responsive_gutter_width: (
 	'mobile': 		calc_responsive_gutter_width($mobile_gutter_width, $mobile_content_width),
 	'tablet': 		calc_responsive_gutter_width($tablet_gutter_width, $tablet_content_width),
 	'desktop': 		calc_responsive_gutter_width($desktop_gutter_width, $desktop_content_width),
 	'largetop': 	calc_responsive_gutter_width($largetop_gutter_width, $largetop_content_width)
-);
+	);
+} @else {
+	$responsive_gutter_width: (
+	'mobile': 		$mobile_gutter_width,
+	'tablet': 		$tablet_gutter_width,
+	'desktop': 		$desktop_gutter_width,
+	'largetop': 	$largetop_gutter_width
+	);
+}
 
 $num_grid_columns: 12;
 
@@ -74,6 +97,7 @@ $num_grid_columns: 12;
 	$col_width: 						map-get($responsive_col_width, $breakpoint);
 	.container {
 		@if type-of($breakpoint_container_margin) == string {
+			width: $col_width * 12 + $gutter_width * 11;
 			margin-left: $breakpoint_container_margin;
 			margin-right: $breakpoint_container_margin;
 		} @else {
@@ -104,8 +128,13 @@ $num_grid_columns: 12;
 						[class*='col-#{$margin_breakpoint_key}-'] {
 							margin-left: $gutter_width / 2;
 							margin-right: $gutter_width / 2;
-							flex-basis: 100% - $gutter_width;
-							max-width: 100% - $gutter_width;
+							@if unitless($gutter_width) {
+								flex-basis: 100% - $gutter_width;
+								max-width: 100% - $gutter_width;
+							} @else {
+								flex-basis: calc(100% - $gutter_width);
+								max-width: calc(100% - $gutter_width);
+							}
 						}
 					}
 				}
