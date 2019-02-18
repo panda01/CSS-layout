@@ -18,7 +18,9 @@
 @function calc_responsive_gutter_width($gutter_width, $content_width) {
 	@return calc_percent($gutter_width, ($gutter_width + $content_width));
 }
-@function col_col_width_static($gutter_width, $content_width) {
+@function col_col_width_static($size_key) {
+	$content_width: map-get($responsive_content_width, $size_key);
+	$gutter_width: map-get($responsive_gutter_width, $size_key);
 	@return ($content_width - ($gutter_width * 11)) / 12;
 }
 @function should_have_width_override($loopbreakpoint, $fnbreakpoint) {
@@ -36,46 +38,14 @@
 // Remove these keys inorder to not support certain sizes
 $responsive_breakpoint_keys: ('mobile', 'tablet', 'desktop', 'largetop');
 
-$responsive_side_margins: (
-	'mobile': 		$mobile_side_margin,
-	'tablet': 		$tablet_side_margin,
-	'desktop': 		$desktop_side_margin,
-	'largetop': 	$largetop_side_margin
-);
 // total width is simply (num_cols * col_width + num_cols * gutter_width)
 // Need to make it so that way you just give it col width and gutter width and we're alright
-$responsive_col_width: ();
-$responsive_gutter_width: ();
-@if unitless($mobile_content_width) {
-	$responsive_col_width: (
-	'mobile': 		calc_col_width_percent($mobile_gutter_width, $mobile_content_width),
-	'tablet': 		calc_col_width_percent($tablet_gutter_width, $tablet_content_width),
-	'desktop': 		calc_col_width_percent($desktop_gutter_width, $desktop_content_width),
-	'largetop': 	calc_col_width_percent($largetop_gutter_width, $largetop_content_width)
-	);
-} @else {
-	$responsive_col_width: (
-	'mobile': 		col_col_width_static($mobile_gutter_width, $mobile_content_width),
-	'tablet': 		col_col_width_static($tablet_gutter_width, $tablet_content_width),
-	'desktop': 		col_col_width_static($desktop_gutter_width, $desktop_content_width),
-	'largetop': 	col_col_width_static($largetop_gutter_width, $largetop_content_width)
-	);
-}
-@if unitless($mobile_gutter_width) == true {
-	$responsive_gutter_width: (
-	'mobile': 		calc_responsive_gutter_width($mobile_gutter_width, $mobile_content_width),
-	'tablet': 		calc_responsive_gutter_width($tablet_gutter_width, $tablet_content_width),
-	'desktop': 		calc_responsive_gutter_width($desktop_gutter_width, $desktop_content_width),
-	'largetop': 	calc_responsive_gutter_width($largetop_gutter_width, $largetop_content_width)
-	);
-} @else {
-	$responsive_gutter_width: (
-	'mobile': 		$mobile_gutter_width,
-	'tablet': 		$tablet_gutter_width,
-	'desktop': 		$desktop_gutter_width,
-	'largetop': 	$largetop_gutter_width
-	);
-}
+$responsive_col_width: (
+	'mobile': 		col_col_width_static('mobile'),
+	'tablet': 		col_col_width_static('tablet'),
+	'desktop': 		col_col_width_static('desktop'),
+	'largetop': 	col_col_width_static('largetop')
+);
 
 $num_grid_columns: 12;
 

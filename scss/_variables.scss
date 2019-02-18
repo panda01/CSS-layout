@@ -3,20 +3,22 @@ $min_tablet: 768px;
 $min_desktop: 961px;
 $min_largetop: 1600px;
 
-$mobile_side_margin: auto;
-$tablet_side_margin: auto;
-$desktop_side_margin: auto;
-$largetop_side_margin: auto;
 
-// Do not give these units, because these will be turned into percents.
-$mobile_content_width: 315px;
-$mobile_gutter_width: 9px;
-
-$tablet_content_width: 688px;
-$tablet_gutter_width: 20px;
-
-$desktop_content_width: 1160px;
-$desktop_gutter_width: 40px;
-
-$largetop_content_width: 1160px;
-$largetop_gutter_width: 60px;
+$responsive_gutter_width: (
+	'mobile': 		9px,
+	'tablet': 		20px,
+	'desktop': 		40px,
+	'largetop': 	60px
+);
+$responsive_content_width: (
+	'mobile': 		315px,
+	'tablet': 		688px,
+	'desktop': 		1160px,
+	'largetop': 	1740px
+);
+$responsive_side_margins: (
+	'mobile': 		auto,
+	'tablet': 		auto,
+	'desktop': 		auto,
+	'largetop': 	auto
+);
