@@ -12,7 +12,7 @@
 		@return 0;
 	}
 	@if $breakpoint_key == 'tablet' {
-		@return map-get($responsive_breakpoints, 'mobile');
+		@return map-get($responsive_breakpoints, 'mobile') + 1;
 	}
 	@if $breakpoint_key == 'desktop' {
 		@return map-get($responsive_breakpoints, 'desktop');

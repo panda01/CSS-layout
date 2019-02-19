@@ -149,8 +149,8 @@ $num_grid_columns: 12;
 		@media screen and (max-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
-	} @else if $breakpoint === 'tablet' { // tablet
-		$min_tablet: map-get($responsive_breakpoints, 'mobile');
+	} @else if $breakpoint == 'tablet' { // tablet
+		$min_tablet: map-get($responsive_breakpoints, 'mobile') + 1;
 		@media screen and (min-width: $min_tablet) and (max-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
