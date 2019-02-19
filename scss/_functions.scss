@@ -1,0 +1,23 @@
+@function get_breakpoint_max($breakpoint_key) {
+	@if $breakpoint_key == 'mobile' {
+		@return map-get($responsive_breakpoints, 'mobile');
+	}
+	@if $breakpoint_key == 'tablet' {
+		@return map-get($responsive_breakpoints, 'tablet');
+	}
+	@return nil;
+}
+@function get_breakpoint_min($breakpoint_key) {
+	@if $breakpoint_key == 'mobile' {
+		@return 0;
+	}
+	@if $breakpoint_key == 'tablet' {
+		@return map-get($responsive_breakpoints, 'mobile');
+	}
+	@if $breakpoint_key == 'desktop' {
+		@return map-get($responsive_breakpoints, 'desktop');
+	}
+	@if $breakpoint_key == 'largetop' {
+		@return map-get($responsive_breakpoints, 'largetop');
+	}
+}

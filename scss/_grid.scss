@@ -135,21 +135,23 @@ $num_grid_columns: 12;
 	}
 }
 
-@each $breakpoint in $responsive_breakpoint_keys {
+@each $breakpoint in $responsive_breakpoints {
+	$curr_breakpoint: map-get($responsive_breakpoints, $breakpoint);
 	@if $breakpoint == 'desktop' {
-		@media screen and (min-width: $min_desktop) {
+		@media screen and (min-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
 	} @else if $breakpoint == 'largetop' {
-		@media screen and (min-width: $min_largetop) {
+		@media screen and (min-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
 	} @else if $breakpoint == 'mobile' {
-		@media screen and (max-width: $max_mobile_tablet) {
+		@media screen and (max-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
-	} @else { // tablet
-		@media screen and (min-width: $min_tablet) and (max-width: $max_mobile_tablet) {
+	} @else if $breakpoint === 'tablet' { // tablet
+		$min_tablet: map-get($responsive_breakpoints, 'mobile');
+		@media screen and (min-width: $min_tablet) and (max-width: $curr_breakpoint) {
 			@include cols($breakpoint);
 		}
 	}
